@@ -3,7 +3,7 @@ package cn.bobdeng.rbac;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public interface TenantRepository {
+public interface TenantRepository extends EntityList<Integer, Tenant> {
     Tenant save(Tenant tenant);
 
     Stream<Tenant> findByName(String name, int from, int to);
