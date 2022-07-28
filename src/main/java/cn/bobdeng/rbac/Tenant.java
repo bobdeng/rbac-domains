@@ -38,13 +38,15 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return description;
     }
 
-    public void addUser(UserDescription userDescription) {
-        users.save(new User(userDescription));
+    public User addUser(UserDescription userDescription) {
+        return users.save(new User(userDescription));
     }
 
     public interface Users extends EntityList<Integer, User> {
         User save(User user);
 
         List<User> findByName(String name);
+
+        Optional<User> findByAccount(String account);
     }
 }

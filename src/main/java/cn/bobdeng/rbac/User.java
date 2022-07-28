@@ -2,9 +2,11 @@ package cn.bobdeng.rbac;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @EqualsAndHashCode
+@NoArgsConstructor
 public class User implements Entity<Integer, UserDescription> {
     @Getter
     @Setter
@@ -12,6 +14,9 @@ public class User implements Entity<Integer, UserDescription> {
     @Getter
     @Setter
     private UserDescription description;
+    @Getter
+    @Setter
+    private UserAccount account;
 
     public User(UserDescription userDescription) {
         this.description = userDescription;
