@@ -1,14 +1,12 @@
 package cn.bobdeng.rbac;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Tenant implements Entity<Integer, TenantDescription> {
     @Setter
     @Getter
@@ -19,8 +17,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Setter
     private Users users;
 
-    public Tenant() {
-    }
 
     public Tenant(TenantDescription tenantDescription) {
 
