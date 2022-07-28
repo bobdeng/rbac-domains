@@ -1,8 +1,10 @@
 package cn.bobdeng.rbac;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode
+@Data
 public class UserDescription {
     private String name;
 

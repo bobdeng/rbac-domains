@@ -10,4 +10,6 @@ public interface EntityList<ID, E extends Entity<ID, ?>> {
     Stream<E> list();
 
     Optional<E> findByIdentity(ID id);
+
+    int size();
 }

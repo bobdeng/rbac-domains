@@ -42,13 +42,9 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         users.save(new User(userDescription));
     }
 
-    public interface Users {
+    public interface Users extends EntityList<Integer, User> {
         User save(User user);
 
-        Optional<User> findById(Integer id);
-
         List<User> findByName(String name);
-
-        int size();
     }
 }
