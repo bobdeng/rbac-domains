@@ -18,6 +18,11 @@ public class User implements Entity<Integer, UserDescription> {
     @Setter
     private UserAccount account;
 
+    public User(Integer id, UserDescription description) {
+        this.id = id;
+        this.description = description;
+    }
+
     public User(UserDescription userDescription) {
         this.description = userDescription;
     }
