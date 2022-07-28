@@ -13,19 +13,19 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private Integer id;
     @Getter
     @Setter
-    private TenantDescription tenantDescription;
+    private TenantDescription description;
     @Setter
     private Users users;
 
 
     public Tenant(TenantDescription tenantDescription) {
 
-        this.tenantDescription = tenantDescription;
+        this.description = tenantDescription;
     }
 
     public Tenant(Integer id, TenantDescription tenantDescription) {
         this.id = id;
-        this.tenantDescription = tenantDescription;
+        this.description = tenantDescription;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     @Override
     public TenantDescription description() {
-        return tenantDescription;
+        return description;
     }
 
     public void addUser(UserDescription userDescription) {
