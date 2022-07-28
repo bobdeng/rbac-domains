@@ -19,6 +19,9 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     @Setter
     private Users users;
 
+    public Tenant() {
+    }
+
     public Tenant(TenantDescription tenantDescription) {
 
         this.tenantDescription = tenantDescription;
