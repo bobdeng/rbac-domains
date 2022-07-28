@@ -7,16 +7,11 @@ import java.util.Optional;
 
 @EqualsAndHashCode
 @NoArgsConstructor
+@Data
 public class Tenant implements Entity<Integer, TenantDescription> {
-    @Setter
-    @Getter
     private Integer id;
-    @Getter
-    @Setter
     private TenantDescription description;
-    @Setter
     private Users users;
-    @Setter
     private LoginNames loginNames;
 
 

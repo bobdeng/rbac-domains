@@ -38,4 +38,5 @@ public class TenantLoginNamesTest {
         assertThrows(DuplicateLoginNameException.class, () -> tenant.addLoginName(description));
 
     }
+
 }
