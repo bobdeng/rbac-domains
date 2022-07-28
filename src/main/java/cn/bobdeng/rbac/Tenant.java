@@ -59,7 +59,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         Optional<User> findByAccount(String account);
     }
 
-    interface LoginNames extends EntityList<Integer, LoginName> {
+    public interface LoginNames extends EntityList<Integer, LoginName> {
 
         Optional<LoginName> findByLoginName(String name);
     }
