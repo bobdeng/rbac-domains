@@ -1,5 +1,6 @@
 package cn.bobdeng.rbac;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface TenantRepository {
@@ -7,4 +8,5 @@ public interface TenantRepository {
 
     Stream<Tenant> findByName(String name, int from, int to);
 
+    Optional<Tenant> findById(Integer id);
 }

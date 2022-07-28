@@ -1,6 +1,8 @@
 package cn.bobdeng.rbac;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
@@ -8,7 +10,11 @@ import java.util.Optional;
 
 @EqualsAndHashCode
 public class Tenant implements Entity<Integer, TenantDescription> {
+    @Setter
+    @Getter
     private Integer id;
+    @Getter
+    @Setter
     private TenantDescription tenantDescription;
     @Setter
     private Users users;
