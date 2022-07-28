@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @EqualsAndHashCode
-public class LoginName implements Entity<Integer, Object> {
+public class LoginName implements Entity<Integer, LoginNameDescription> {
     private Integer id;
     private LoginNameDescription description;
 
@@ -24,7 +24,7 @@ public class LoginName implements Entity<Integer, Object> {
     }
 
     @Override
-    public Object description() {
+    public LoginNameDescription description() {
         return description;
     }
 }
