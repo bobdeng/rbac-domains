@@ -22,7 +22,7 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public User(UserDescription userDescription) {
-        this.description = userDescription;
+        this(null, userDescription);
     }
 
     @Override

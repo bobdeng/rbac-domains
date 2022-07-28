@@ -15,7 +15,7 @@ public class LoginName implements Entity<Integer, Object> {
     }
 
     public LoginName(LoginNameDescription description) {
-        this.description = description;
+        this(null, description);
     }
 
     @Override

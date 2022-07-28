@@ -45,7 +45,7 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     }
 
     public LoginName addLoginName(LoginNameDescription description) {
-        if (loginNames.findByLoginName(description.name()).isPresent()) {
+        if (loginNames.findByLoginName(description.getName()).isPresent()) {
             throw new DuplicateLoginNameException();
         }
         return loginNames.save(new LoginName(description));
