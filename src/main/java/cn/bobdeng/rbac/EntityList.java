@@ -11,5 +11,7 @@ public interface EntityList<ID, E extends Entity<ID, ?>> {
 
     Optional<E> findByIdentity(ID id);
 
+    E save(E entity);
+
     int size();
 }

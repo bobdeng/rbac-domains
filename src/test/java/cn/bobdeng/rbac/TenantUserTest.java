@@ -27,15 +27,5 @@ public class TenantUserTest {
 
         verify(users).save(new User(userDescription));
     }
-    @Test
-    public void set_user_account(){
-        Tenant tenant = new Tenant(100, null);
-        Tenant.Users users = mock(Tenant.Users.class);
-        tenant.setUsers(users);
-        UserDescription userDescription = new UserDescription("bob");
-        User user = tenant.addUser(userDescription);
-        user.setAccount(new UserAccount("bob.deng"));
 
-
-    }
 }

@@ -16,6 +16,8 @@ public class Tenant implements Entity<Integer, TenantDescription> {
     private TenantDescription description;
     @Setter
     private Users users;
+    @Setter
+    private LoginNames loginNames;
 
 
     public Tenant(TenantDescription tenantDescription) {
@@ -42,11 +44,19 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return users.save(new User(userDescription));
     }
 
+    public LoginName addLoginName(LoginName loginName) {
+        return loginNames.save(loginName);
+    }
+
     public interface Users extends EntityList<Integer, User> {
         User save(User user);
 
         List<User> findByName(String name);
 
         Optional<User> findByAccount(String account);
+    }
+
+    interface LoginNames extends EntityList<Integer, LoginName> {
+
     }
 }

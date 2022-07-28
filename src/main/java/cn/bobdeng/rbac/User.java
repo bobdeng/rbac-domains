@@ -14,9 +14,7 @@ public class User implements Entity<Integer, UserDescription> {
     @Getter
     @Setter
     private UserDescription description;
-    @Getter
-    @Setter
-    private UserAccount account;
+
 
     public User(Integer id, UserDescription description) {
         this.id = id;
