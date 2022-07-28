@@ -2,7 +2,10 @@ package cn.bobdeng.rbac;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class TenantLoginNamesTest {
@@ -16,11 +19,23 @@ public class TenantLoginNamesTest {
         );
         tenant.setLoginNames(loginNames);
         LoginNameDescription description = new LoginNameDescription("bob", user);
-        LoginName loginName = new LoginName(description);
 
-        LoginName result = tenant.addLoginName(loginName);
+        LoginName result = tenant.addLoginName(description);
 
-        verify(loginNames).save(loginName);
+        verify(loginNames).save(new LoginName(description));
         assertEquals(result, new LoginName(1, new LoginNameDescription("bob", user)));
+    }
+
+    @Test
+    public void throw_when_login_name_exist() {
+        Tenant tenant = new Tenant(100, null);
+        User user = new User(101, null);
+        Tenant.LoginNames loginNames = mock(Tenant.LoginNames.class);
+        when(loginNames.findByLoginName("bob")).thenReturn(Optional.of(new LoginName()));
+        tenant.setLoginNames(loginNames);
+        LoginNameDescription description = new LoginNameDescription("bob", user);
+
+        assertThrows(DuplicateLoginNameException.class, () -> tenant.addLoginName(description));
+
     }
 }

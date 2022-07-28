@@ -44,8 +44,11 @@ public class Tenant implements Entity<Integer, TenantDescription> {
         return users.save(new User(userDescription));
     }
 
-    public LoginName addLoginName(LoginName loginName) {
-        return loginNames.save(loginName);
+    public LoginName addLoginName(LoginNameDescription description) {
+        if (loginNames.findByLoginName(description.name()).isPresent()) {
+            throw new DuplicateLoginNameException();
+        }
+        return loginNames.save(new LoginName(description));
     }
 
     public interface Users extends EntityList<Integer, User> {
@@ -58,5 +61,6 @@ public class Tenant implements Entity<Integer, TenantDescription> {
 
     interface LoginNames extends EntityList<Integer, LoginName> {
 
+        Optional<LoginName> findByLoginName(String name);
     }
 }
