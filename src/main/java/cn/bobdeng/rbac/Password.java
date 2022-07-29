@@ -1,12 +1,12 @@
 package cn.bobdeng.rbac;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Getter
+@Setter
 public class Password implements Entity<Integer, PasswordDescription> {
     private Integer id;
     private PasswordDescription description;
