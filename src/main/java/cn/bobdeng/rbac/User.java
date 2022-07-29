@@ -14,7 +14,9 @@ public class User implements Entity<Integer, UserDescription> {
     @Getter
     @Setter
     private UserDescription description;
-
+    @Setter
+    @Getter
+    private UserPassword userPassword;
 
     public User(Integer id, UserDescription description) {
         this.id = id;
@@ -33,5 +35,22 @@ public class User implements Entity<Integer, UserDescription> {
     @Override
     public UserDescription description() {
         return description;
+    }
+
+    public void setPassword(RawPassword rawPassword) {
+        Password password = new Password(this.identity(), new PasswordDescription(rawPassword, userPassword));
+        userPassword.save(password);
+    }
+
+    public boolean verifyPassword(String rawPassword) {
+        return userPassword.findByIdentity(identity())
+                .map(password -> userPassword.match(rawPassword, password.description().getPassword()))
+                .orElse(false);
+    }
+
+    public interface UserPassword extends EntityList<Integer, Password> {
+        String encodePassword(String rawPassword);
+
+        boolean match(String rawPassword, String password);
     }
 }
