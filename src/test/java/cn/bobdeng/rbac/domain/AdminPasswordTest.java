@@ -55,6 +55,7 @@ class AdminPasswordTest {
         AdminPassword.Notifier notifier = mock(AdminPassword.Notifier.class);
         AdminPassword.Store store = mock(AdminPassword.Store.class);
         when(store.get()).thenReturn(Optional.of(""));
+
         AdminPassword adminPassword = new AdminPassword(notifier, store, new PasswordEncoder() {
             @Override
             public String encode(String rawPassword) {
