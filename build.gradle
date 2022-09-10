@@ -24,3 +24,17 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'cn.bobdeng.rbac'
+            artifactId = 'rbac-domain'
+            version = '0.4'
+            from components.java
+        }
+    }
+}
+tasks.jar {
+    enabled = true
+    archiveClassifier = ''
+}
