@@ -91,6 +91,7 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public void setRoles(List<Role> roles) {
+        userRoles().deleteAll();
         roles.forEach(role -> userRoles().save(role));
     }
 
@@ -119,7 +120,7 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     public interface UserRoles extends EntityList<Integer, Role> {
-
+        void deleteAll();
     }
 
     public interface UserLock extends EntityList<Integer, Lock> {

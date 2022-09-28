@@ -7,6 +7,7 @@ import cn.bobdeng.rbac.domain.config.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,6 +22,7 @@ class UserTest {
     private ConfigurationContext configurationContext;
     private Parameters parameters;
     private User.UserLock userLock;
+    private User.UserRoles userRoles;
 
     @BeforeEach
     public void setup() {
@@ -34,9 +36,11 @@ class UserTest {
         user.setConfigurationContext(configurationContext);
         parameters = mock(Parameters.class);
         userLock = mock(User.UserLock.class);
+        userRoles = mock(User.UserRoles.class);
         when(configurationContext.parameters(tenant)).thenReturn(parameters);
         when(rbacContext.userPassword(user)).thenReturn(userPassword);
         when(rbacContext.userLock(user)).thenReturn(userLock);
+        when(rbacContext.userRoles(user)).thenReturn(userRoles);
     }
 
     @Test
@@ -90,5 +94,12 @@ class UserTest {
         RuntimeException e = assertThrows(RuntimeException.class, () -> user.verifyPassword("123456"));
         assertEquals("登录太频繁", e.getMessage());
 
+    }
+
+    @Test
+    public void should_delete_all_roles_before_set() {
+        user.setRoles(List.of());
+
+        verify(userRoles).deleteAll();
     }
 }
