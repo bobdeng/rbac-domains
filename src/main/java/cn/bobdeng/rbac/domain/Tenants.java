@@ -1,6 +1,6 @@
 package cn.bobdeng.rbac.domain;
 
-public class Tenants {
+public class Tenants{
     private TenantRepository tenantRepository;
 
     public Tenants(TenantRepository tenantRepository) {
