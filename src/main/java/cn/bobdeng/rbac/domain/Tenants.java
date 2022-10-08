@@ -1,6 +1,8 @@
 package cn.bobdeng.rbac.domain;
 
-public class Tenants{
+import java.util.Optional;
+
+public class Tenants {
     private TenantRepository tenantRepository;
 
     public Tenants(TenantRepository tenantRepository) {
@@ -10,5 +12,9 @@ public class Tenants{
 
     public Tenant add(TenantDescription tenantDescription) {
         return this.tenantRepository.save(new Tenant(tenantDescription));
+    }
+
+    private Optional<Tenant> findById(Integer id) {
+        return this.tenantRepository.findByIdentity(id);
     }
 }
