@@ -14,7 +14,7 @@ public class Tenants {
         return this.tenantRepository.save(new Tenant(tenantDescription));
     }
 
-    private Optional<Tenant> findById(Integer id) {
+    public Optional<Tenant> findById(Integer id) {
         return this.tenantRepository.findByIdentity(id);
     }
 }
