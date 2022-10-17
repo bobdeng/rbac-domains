@@ -26,7 +26,7 @@ public class ConfigurerImpl implements ConfigurationContext.Configurer {
                 .filter(parameter -> parameter.isChanged(values))
                 .forEach(parameter -> {
                     String key = parameter.identity();
-                    parameterRepository.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
+                    parameterRepository.save(new Parameter(parameter.getId(), new ParameterDescription(parameter.description().getName(), values.get(key))));
                 });
     }
 
