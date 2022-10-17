@@ -20,9 +20,9 @@ class UserTest {
     private RbacContext rbacContext;
     private User.UserPassword userPassword;
     private ConfigurationContext configurationContext;
-    private Parameters parameters;
     private User.UserLock userLock;
     private User.UserRoles userRoles;
+    private ParameterRepository parameterRepository;
 
     @BeforeEach
     public void setup() {
@@ -34,10 +34,10 @@ class UserTest {
         user.setRbacContext(rbacContext);
         configurationContext = mock(ConfigurationContext.class);
         user.setConfigurationContext(configurationContext);
-        parameters = mock(Parameters.class);
+        parameterRepository=mock(ParameterRepository.class);
         userLock = mock(User.UserLock.class);
         userRoles = mock(User.UserRoles.class);
-        when(configurationContext.parameters(tenant)).thenReturn(parameters);
+        when(configurationContext.configurer()).thenReturn(new ConfigurerImpl(parameterRepository));
         when(rbacContext.userPassword(user)).thenReturn(userPassword);
         when(rbacContext.userLock(user)).thenReturn(userLock);
         when(rbacContext.userRoles(user)).thenReturn(userRoles);
@@ -45,7 +45,7 @@ class UserTest {
 
     @Test
     public void should_not_check_password_when_policy_is_none() {
-        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY))
+        when(parameterRepository.findByName(BaseParameters.PASSWORD_POLICY))
                 .thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
 
         when(userPassword.encodePassword("123456")).thenReturn("654321");
@@ -58,7 +58,7 @@ class UserTest {
 
     @Test
     public void should_weak_check_password_when_policy_is_weak() {
-        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY))
+        when(parameterRepository.findByName(BaseParameters.PASSWORD_POLICY))
                 .thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "weak"))));
         when(userPassword.encodePassword("123456")).thenReturn("654321");
 
@@ -70,7 +70,7 @@ class UserTest {
     @Test
     public void should_add_lock_when_try_verify_password() {
         SystemDate.setNowSupplier("2020-01-01 10:00:00");
-        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY))
+        when(parameterRepository.findByName(BaseParameters.PASSWORD_POLICY))
                 .thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
 
         when(userPassword.encodePassword("123456")).thenReturn("654321");
@@ -85,7 +85,7 @@ class UserTest {
     @Test
     public void should_throw_if_user_is_locked() {
         SystemDate.setNowSupplier("2020-01-01 10:00:00");
-        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY))
+        when(parameterRepository.findByName(BaseParameters.PASSWORD_POLICY))
                 .thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
 
         when(userPassword.encodePassword("123456")).thenReturn("654321");

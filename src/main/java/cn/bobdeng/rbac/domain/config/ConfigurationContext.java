@@ -1,8 +1,8 @@
 package cn.bobdeng.rbac.domain.config;
 
-import cn.bobdeng.rbac.domain.Tenant;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ConfigurationContext {
     interface Configurer {
@@ -10,10 +10,8 @@ public interface ConfigurationContext {
 
         void saveParameters(List<Parameter> parameters);
 
-        Parameters parameters();
+        Optional<Parameter> getParameterByName(String name);
     }
 
-    Parameters parameters(Tenant tenant);
-
-    Configurer asConfigurer(Tenant tenant);
+    Configurer configurer();
 }

@@ -24,11 +24,11 @@ public class UserPasswordTest {
         user.setRbacContext(rbacContext);
         user.setTenant(Tenant::new);
         ConfigurationContext configurationContext = mock(ConfigurationContext.class);
-        Parameters parameters = mock(Parameters.class);
         user.setConfigurationContext(configurationContext);
         User.UserLock userLock = mock(User.UserLock.class);
-        when(parameters.findByIdentity(BaseParameters.PASSWORD_POLICY)).thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
-        when(configurationContext.parameters(any())).thenReturn(parameters);
+        ParameterRepository parameterRepository = mock(ParameterRepository.class);
+        when(parameterRepository.findByName(BaseParameters.PASSWORD_POLICY)).thenReturn(Optional.of(new Parameter("", new ParameterDescription("", "none"))));
+        when(configurationContext.configurer()).thenReturn(new ConfigurerImpl(parameterRepository));
         when(rbacContext.userLock(user)).thenReturn(userLock);
         when(userLock.findByIdentity(user.identity())).thenReturn(Optional.empty());
         when(rbacContext.userPassword(user)).thenReturn(userPassword);
@@ -53,9 +53,9 @@ public class UserPasswordTest {
     public void verify_user_password() {
         PasswordDescription description = new PasswordDescription("654321");
         when(userPassword.findByIdentity(1)).thenReturn(Optional.of(new Password(1, description)));
-        when(userPassword.match("123456","654321")).thenReturn(true);
+        when(userPassword.match("123456", "654321")).thenReturn(true);
         assertTrue(user.verifyPassword("123456"));
-        when(userPassword.match("123455","654321")).thenReturn(false);
+        when(userPassword.match("123455", "654321")).thenReturn(false);
         assertFalse(user.verifyPassword("123455"));
     }
 }

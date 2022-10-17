@@ -60,8 +60,7 @@ public class User implements Entity<Integer, UserDescription> {
     }
 
     private void checkPasswordStrength(RawPassword rawPassword) {
-        Parameters parameters = configurationContext.parameters(tenant.get());
-        String passwordPolicy = parameters.findByIdentity(BaseParameters.PASSWORD_POLICY)
+        String passwordPolicy = configurationContext.configurer().getParameterByName(BaseParameters.PASSWORD_POLICY)
                 .map(Parameter::getDescription)
                 .map(ParameterDescription::getValue)
                 .orElse("none");

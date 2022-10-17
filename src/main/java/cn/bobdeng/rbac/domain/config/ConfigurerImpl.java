@@ -1,23 +1,20 @@
 package cn.bobdeng.rbac.domain.config;
 
-import cn.bobdeng.rbac.domain.Tenant;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ConfigurerImpl implements ConfigurationContext.Configurer {
-    private ConfigurationContext configurationContext;
-    private Tenant tenant;
+    private ParameterRepository parameterRepository;
 
-    public ConfigurerImpl(ConfigurationContext configurationContext, Tenant tenant) {
-        this.configurationContext = configurationContext;
-        this.tenant = tenant;
+    public ConfigurerImpl(ParameterRepository parameterRepository) {
+        this.parameterRepository = parameterRepository;
     }
 
     @Override
     public List<Parameter> listParameters() {
-        return parameters().list().collect(Collectors.toList());
+        return parameterRepository.list().collect(Collectors.toList());
     }
 
     @Override
@@ -25,16 +22,17 @@ public class ConfigurerImpl implements ConfigurationContext.Configurer {
         parameters.stream().map(Parameter::getDescription)
                 .forEach(ParameterDescription::validate);
         Map<String, String> values = parameters.stream().collect(Collectors.toMap(Parameter::identity, parameter -> parameter.description().getValue()));
-        parameters().list()
+        parameterRepository.list()
                 .filter(parameter -> parameter.isChanged(values))
                 .forEach(parameter -> {
                     String key = parameter.identity();
-                    parameters().save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
+                    parameterRepository.save(new Parameter(parameter.getId(), new ParameterDescription(values.get(key), key)));
                 });
     }
 
     @Override
-    public Parameters parameters() {
-        return configurationContext.parameters(tenant);
+    public Optional<Parameter> getParameterByName(String name) {
+        return parameterRepository.findByName(name);
     }
+
 }
